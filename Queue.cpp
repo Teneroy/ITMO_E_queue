@@ -160,3 +160,118 @@ void dvarqueue::Queue::print()
         std::cout << std::setw(25) << _arr[i].name << " " << _arr[i].adress << std::endl;
     }
 }
+
+/*________________________________________CIRCLE LIST____________________________________________*/
+
+circlelist::Queue::Queue()
+{
+    _size = 0;
+    tail = nullptr;
+}
+
+circlelist::Queue::~Queue()
+{
+    makenull();
+}
+
+void circlelist::Queue::enqueue(elem x)
+{
+    if(full())
+    {
+        std::cout << "QUEUE is full" << std::endl;
+    } else
+    {
+        if(empty())
+        {
+            tail = new cnode();
+            tail -> data = x;
+        } else
+        {
+            cnode * temp = tail -> next;
+            if(temp != tail)
+            {
+                tail -> next = new cnode(x, temp);
+                tail = tail -> next;
+                tail -> next = temp;
+            } else
+            {
+                tail -> next = new cnode(x, tail);
+                tail = tail -> next;
+            }
+        }
+        _size++;
+    }
+}
+
+elem circlelist::Queue::dequeue()
+{
+    if(empty())
+    {
+        std::cout << "QUEUE is empty" << std::endl;
+        return fake_l.data;
+    }
+    cnode * temp = tail -> next;
+    elem x = temp -> data;
+    if(temp == tail)
+    {
+        tail = nullptr;
+    } else
+    {
+        tail -> next = temp -> next;
+        delete temp;
+    }
+    _size--;
+    return x;
+}
+
+elem circlelist::Queue::front()
+{
+    if(empty())
+    {
+        std::cout << "QUEUE is empty" << std::endl;
+        return fake_l.data;
+    }
+    return tail -> next -> data;
+}
+
+bool circlelist::Queue::full()
+{
+    return _size == Q_SIZE;
+}
+
+bool circlelist::Queue::empty()
+{
+    return tail == nullptr;
+}
+
+void circlelist::Queue::makenull()
+{
+    if(!empty())
+    {
+        _size = 0;
+        cnode * temp1;
+        cnode * temp2 = tail -> next;
+        while (temp2 != tail)
+        {
+            temp1 = temp2;
+            temp2 = temp2 -> next;
+            delete temp1;
+        }
+        tail = nullptr;
+    }
+}
+
+void circlelist::Queue::print()
+{
+    if(!empty())
+    {
+        cnode * temp = tail -> next;
+        std::cout << std::setw(25) << "<data>" << std::endl;
+        while (temp != tail)
+        {
+            std::cout << std::setw(25) << temp -> data.name << " "  << temp -> data.adress << std::endl;
+            temp = temp -> next;
+        }
+        std::cout << std::setw(25) << temp -> data.name << " "  << temp -> data.adress << std::endl;
+    }
+}

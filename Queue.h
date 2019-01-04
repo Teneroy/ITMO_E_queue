@@ -50,5 +50,38 @@ namespace dvarqueue
     };
 }
 
+namespace circlelist
+{
+
+    struct cnode
+    {
+        elem data;
+        cnode * next;
+        cnode()
+        {
+            next = this;
+        }
+        cnode(elem x, cnode * n):data(x),next(n)
+        {}
+    };
+
+    class Queue
+    {
+    public:
+        Queue();
+        ~Queue();
+        void enqueue(elem x);
+        elem dequeue();
+        elem front();
+        void makenull();
+        void print();
+    private:
+        bool full();
+        bool empty();
+        cnode * tail;
+        int _size;
+    };
+}
+
 
 #endif //ITMO_E_QUEUE_QUEUE_H

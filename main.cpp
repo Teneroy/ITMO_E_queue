@@ -3,7 +3,7 @@
 //
 
 #include "Queue.h"
-using namespace dvarqueue;
+using namespace circlelist;
 
 int main()
 {
@@ -13,8 +13,11 @@ int main()
     elem k("k", "k");
     Queue a;
     a.enqueue(x);
+    a.print();
     a.enqueue(y);
+    a.print();
     a.enqueue(z);
+    a.print();
     a.enqueue(k);
     a.enqueue(x);
     a.print();
@@ -26,14 +29,11 @@ int main()
     a.dequeue();
     a.print();
     a.dequeue();
-    a.print();
-    a.dequeue();
-    a.print();
     a.enqueue(x);
     a.enqueue(y);
     a.print();
     a.makenull();
-    a.print();
+//    a.print();
 
 return 0;
 }
