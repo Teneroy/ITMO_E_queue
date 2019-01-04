@@ -3,7 +3,7 @@
 //
 
 #include "Queue.h"
-using namespace atdlistaueue;
+using namespace dvarqueue;
 
 int main()
 {
@@ -22,9 +22,13 @@ int main()
     a.print();
     std::cout << "front Result: " << a.front().name << std::endl;
     a.dequeue();
+    a.print();
     a.dequeue();
+    a.print();
     a.dequeue();
+    a.print();
     a.dequeue();
+    a.print();
     a.enqueue(x);
     a.enqueue(y);
     a.print();
