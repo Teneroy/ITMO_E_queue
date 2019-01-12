@@ -15,18 +15,15 @@ namespace atdlistaueue
     class Queue
     {
     public:
-        Queue();
-        ~Queue();
         void enqueue(elem x);
         elem dequeue();
         elem front();
         void makenull();
         void print();
-    private:
         bool full();
         bool empty();
+    private:
         List _ob;
-        int _size;
     };
 }
 
@@ -41,9 +38,9 @@ namespace dvarqueue
         elem front();
         void makenull();
         void print();
-    private:
         bool full();
         bool empty();
+    private:
         int _begin;
         int _end;
         elem _arr[AR_SIZE];
@@ -75,11 +72,10 @@ namespace circlelist
         elem front();
         void makenull();
         void print();
-    private:
         bool full();
         bool empty();
+    private:
         cnode * tail;
-        int _size;
     };
 }
 

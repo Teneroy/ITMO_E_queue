@@ -4,70 +4,36 @@
 
 #include "Queue.h"
 
-node fake_l;
-
-atdlistaueue::Queue::Queue()
-{
-    _size = 0;
-}
-
-atdlistaueue::Queue::~Queue()
-{
-    _ob.makenull();
-}
-
 void atdlistaueue::Queue::enqueue(elem x)
 {
-    if(full())
-    {
-        std::cout << "QUEUE is full" << std::endl;
-    } else
-    {
-        _ob.insert(_ob.endL(), x);
-        _size++;
-    }
+    _ob.insert(_ob.endL(), x);
 }
 
 elem atdlistaueue::Queue::dequeue()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     elem x = _ob.retrieve(_ob.firstL());
     _ob.deleteEl(_ob.firstL());
-    _size--;
     return x;
 }
 
 elem atdlistaueue::Queue::front()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     return _ob.retrieve(_ob.firstL());
 }
 
 bool atdlistaueue::Queue::full()
 {
-    return _size == Q_SIZE;
+    return false;
 }
 
 bool atdlistaueue::Queue::empty()
 {
-    return _size == 0;
+    return _ob.endL() == 0;
 }
 
 void atdlistaueue::Queue::makenull()
 {
-    if(!empty())
-    {
-        _size = 0;
-        _ob.makenull();
-    }
+    _ob.makenull();
 }
 
 void atdlistaueue::Queue::print()
@@ -85,25 +51,14 @@ dvarqueue::Queue::Queue()
 
 void dvarqueue::Queue::enqueue(elem x)
 {
-    if(full())
-    {
-        std::cout << "QUEUE is full" << std::endl;
-    } else
-    {
-        if(empty())
-            _begin++;
-        _end = (_end + 1) % AR_SIZE;
-        _arr[_end] = x;
-    }
+    if(empty())
+       _begin++;
+    _end = (_end + 1) % AR_SIZE;
+    _arr[_end] = x;
 }
 
 elem dvarqueue::Queue::dequeue()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     elem x = _arr[_begin];
     //_arr[_begin] = elem("", "");
     if (_begin == _end)
@@ -121,11 +76,6 @@ elem dvarqueue::Queue::dequeue()
 
 elem dvarqueue::Queue::front()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     return _arr[_begin];
 }
 
@@ -141,11 +91,8 @@ bool dvarqueue::Queue::empty()
 
 void dvarqueue::Queue::makenull()
 {
-    if(!empty())
-    {
-        _begin = AR_EMPTY;
-        _end = AR_SIZE - 1;
-    }
+    _begin = AR_EMPTY;
+    _end = AR_SIZE - 1;
 }
 
 void dvarqueue::Queue::print()
@@ -165,7 +112,6 @@ void dvarqueue::Queue::print()
 
 circlelist::Queue::Queue()
 {
-    _size = 0;
     tail = nullptr;
 }
 
@@ -176,40 +122,28 @@ circlelist::Queue::~Queue()
 
 void circlelist::Queue::enqueue(elem x)
 {
-    if(full())
+    if(empty())
     {
-        std::cout << "QUEUE is full" << std::endl;
+        tail = new cnode();
+        tail -> data = x;
     } else
     {
-        if(empty())
+        cnode * temp = tail -> next;
+        if(temp != tail)
         {
-            tail = new cnode();
-            tail -> data = x;
+            tail -> next = new cnode(x, temp);
+            tail = tail -> next;
+            tail -> next = temp;
         } else
         {
-            cnode * temp = tail -> next;
-            if(temp != tail)
-            {
-                tail -> next = new cnode(x, temp);
-                tail = tail -> next;
-                tail -> next = temp;
-            } else
-            {
-                tail -> next = new cnode(x, tail);
-                tail = tail -> next;
-            }
+            tail -> next = new cnode(x, tail);
+            tail = tail -> next;
         }
-        _size++;
     }
 }
 
 elem circlelist::Queue::dequeue()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     cnode * temp = tail -> next;
     elem x = temp -> data;
     if(temp == tail)
@@ -220,23 +154,17 @@ elem circlelist::Queue::dequeue()
         tail -> next = temp -> next;
         delete temp;
     }
-    _size--;
     return x;
 }
 
 elem circlelist::Queue::front()
 {
-    if(empty())
-    {
-        std::cout << "QUEUE is empty" << std::endl;
-        return fake_l.data;
-    }
     return tail -> next -> data;
 }
 
 bool circlelist::Queue::full()
 {
-    return _size == Q_SIZE;
+    return false;
 }
 
 bool circlelist::Queue::empty()
@@ -246,19 +174,15 @@ bool circlelist::Queue::empty()
 
 void circlelist::Queue::makenull()
 {
-    if(!empty())
-    {
-        _size = 0;
-        cnode * temp1;
-        cnode * temp2 = tail -> next;
-        while (temp2 != tail)
-        {
-            temp1 = temp2;
-            temp2 = temp2 -> next;
-            delete temp1;
-        }
-        tail = nullptr;
-    }
+     cnode * temp1;
+     cnode * temp2 = tail -> next;
+     while (temp2 != tail)
+     {
+         temp1 = temp2;
+         temp2 = temp2 -> next;
+         delete temp1;
+     }
+     tail = nullptr;
 }
 
 void circlelist::Queue::print()

@@ -33,7 +33,7 @@ int main()
     a.enqueue(y);
     a.print();
     a.makenull();
-//    a.print();
+    a.print();
 
 return 0;
 }
