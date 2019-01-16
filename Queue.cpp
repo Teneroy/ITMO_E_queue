@@ -4,19 +4,19 @@
 
 #include "Queue.h"
 
-void atdlistaueue::Queue::enqueue(elem x)
+void atdlistaueue::Queue::enqueue(data_type x)
 {
     _ob.insert(_ob.endL(), x);
 }
 
-elem atdlistaueue::Queue::dequeue()
+data_type atdlistaueue::Queue::dequeue()
 {
-    elem x = _ob.retrieve(_ob.firstL());
+    data_type x = _ob.retrieve(_ob.firstL());
     _ob.deleteEl(_ob.firstL());
     return x;
 }
 
-elem atdlistaueue::Queue::front()
+data_type atdlistaueue::Queue::front()
 {
     return _ob.retrieve(_ob.firstL());
 }
@@ -49,7 +49,7 @@ dvarqueue::Queue::Queue()
     _end = AR_SIZE - 1;
 }
 
-void dvarqueue::Queue::enqueue(elem x)
+void dvarqueue::Queue::enqueue(data_type x)
 {
     if(empty())
        _begin++;
@@ -57,10 +57,10 @@ void dvarqueue::Queue::enqueue(elem x)
     _arr[_end] = x;
 }
 
-elem dvarqueue::Queue::dequeue()
+data_type dvarqueue::Queue::dequeue()
 {
-    elem x = _arr[_begin];
-    //_arr[_begin] = elem("", "");
+    data_type x = _arr[_begin];
+    //_arr[_begin] = data_type("", "");
     if (_begin == _end)
     {
         _begin = AR_EMPTY;
@@ -74,7 +74,7 @@ elem dvarqueue::Queue::dequeue()
 
 }
 
-elem dvarqueue::Queue::front()
+data_type dvarqueue::Queue::front()
 {
     return _arr[_begin];
 }
@@ -120,7 +120,7 @@ circlelist::Queue::~Queue()
     makenull();
 }
 
-void circlelist::Queue::enqueue(elem x)
+void circlelist::Queue::enqueue(data_type x)
 {
     if(empty())
     {
@@ -142,10 +142,10 @@ void circlelist::Queue::enqueue(elem x)
     }
 }
 
-elem circlelist::Queue::dequeue()
+data_type circlelist::Queue::dequeue()
 {
     cnode * temp = tail -> next;
-    elem x = temp -> data;
+    data_type x = temp -> data;
     if(temp == tail)
     {
         tail = nullptr;
@@ -157,7 +157,7 @@ elem circlelist::Queue::dequeue()
     return x;
 }
 
-elem circlelist::Queue::front()
+data_type circlelist::Queue::front()
 {
     return tail -> next -> data;
 }
