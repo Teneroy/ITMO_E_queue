@@ -4,19 +4,19 @@
 
 #include "Queue.h"
 
-void atdlistaueue::Queue::enqueue(data_type x)
+void atdlistaueue::Queue::enqueue(elem x)
 {
     _ob.insert(_ob.endL(), x);
 }
 
-data_type atdlistaueue::Queue::dequeue()
+elem atdlistaueue::Queue::dequeue()
 {
-    data_type x = _ob.retrieve(_ob.firstL());
+    elem x = _ob.retrieve(_ob.firstL());
     _ob.deleteEl(_ob.firstL());
     return x;
 }
 
-data_type atdlistaueue::Queue::front()
+elem atdlistaueue::Queue::front()
 {
     return _ob.retrieve(_ob.firstL());
 }
@@ -45,53 +45,40 @@ void atdlistaueue::Queue::print()
 
 dvarqueue::Queue::Queue()
 {
-    _begin = AR_EMPTY;
-    _end = AR_SIZE - 1;
+    _begin = 0;
+    _end = AR_SIZE - 1;//Задаю концу списка позицию, чтобы тот при первом добавлении, писал в ноль
 }
 
-void dvarqueue::Queue::enqueue(data_type x)
+void dvarqueue::Queue::enqueue(elem x)
 {
-    if(empty())
-       _begin++;
-    _end = (_end + 1) % AR_SIZE;
+    _end = step(_end);
     _arr[_end] = x;
 }
 
-data_type dvarqueue::Queue::dequeue()
+elem dvarqueue::Queue::dequeue()
 {
-    data_type x = _arr[_begin];
-    //_arr[_begin] = data_type("", "");
-    if (_begin == _end)
-    {
-        _begin = AR_EMPTY;
-    } else if (_begin == AR_SIZE - 1)
-    {
-        _begin = 0;
-    } else
-    {
-        _begin++;
-    }
-
+    _begin = step(_begin);
 }
 
-data_type dvarqueue::Queue::front()
+elem dvarqueue::Queue::front()
 {
-    return _arr[_begin];
-}
-
-bool dvarqueue::Queue::full()
-{
-    return ((_end + 1) % AR_SIZE) == _begin;
+    return _arr[_begin]; //Возвращаем первый элемент
 }
 
 bool dvarqueue::Queue::empty()
 {
-    return _begin == AR_EMPTY;
+    return step(_end) == _begin; //Если позиция после последней равна началу, то массив заполнен
 }
 
-void dvarqueue::Queue::makenull()
+bool dvarqueue::Queue::full()
 {
-    _begin = AR_EMPTY;
+    std::cout << "STEP: " << step(step(_end)) << std::endl;
+    return step(step(_end)) == _begin; //Если начало равно обозначению пустого массива, то массив пуст
+}
+
+void dvarqueue::Queue::makenull() //Зануляем
+{
+    _begin = 0;
     _end = AR_SIZE - 1;
 }
 
@@ -108,6 +95,11 @@ void dvarqueue::Queue::print()
     }
 }
 
+int dvarqueue::Queue::step(int p)
+{
+    return ((p + 1) % AR_SIZE);
+}
+
 /*________________________________________CIRCLE LIST____________________________________________*/
 
 circlelist::Queue::Queue()
@@ -117,12 +109,15 @@ circlelist::Queue::Queue()
 
 circlelist::Queue::~Queue()
 {
-    makenull();
+    if(tail != nullptr)
+    {
+        makenull();
+    }
 }
 
-void circlelist::Queue::enqueue(data_type x)
+void circlelist::Queue::enqueue(elem x)
 {
-    if(empty())
+    if(tail == nullptr)
     {
         tail = new cnode();
         tail -> data = x;
@@ -142,13 +137,14 @@ void circlelist::Queue::enqueue(data_type x)
     }
 }
 
-data_type circlelist::Queue::dequeue()
+elem circlelist::Queue::dequeue()
 {
     cnode * temp = tail -> next;
-    data_type x = temp -> data;
+    elem x = temp -> data;
     if(temp == tail)
     {
         tail = nullptr;
+        delete temp;
     } else
     {
         tail -> next = temp -> next;
@@ -157,7 +153,7 @@ data_type circlelist::Queue::dequeue()
     return x;
 }
 
-data_type circlelist::Queue::front()
+elem circlelist::Queue::front()
 {
     return tail -> next -> data;
 }
@@ -174,15 +170,17 @@ bool circlelist::Queue::empty()
 
 void circlelist::Queue::makenull()
 {
-     cnode * temp1;
-     cnode * temp2 = tail -> next;
-     while (temp2 != tail)
-     {
-         temp1 = temp2;
-         temp2 = temp2 -> next;
-         delete temp1;
-     }
-     tail = nullptr;
+
+        cnode * temp1;
+        cnode * temp2 = tail -> next;
+        while (temp2 != tail)
+        {
+            temp1 = temp2;
+            temp2 = temp2 -> next;
+            delete temp1;
+        }
+        tail = nullptr;
+
 }
 
 void circlelist::Queue::print()

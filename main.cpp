@@ -3,7 +3,7 @@
 //
 
 #include "Queue.h"
-using namespace circlelist;
+using namespace dvarqueue;
 
 int main()
 {
@@ -12,28 +12,31 @@ int main()
     elem z("z", "z");
     elem k("k", "k");
     Queue a;
+    std::cout << "empty: " << a.empty() << std::endl;
+    a.print();
     a.enqueue(x);
     a.print();
     a.enqueue(y);
     a.print();
     a.enqueue(z);
     a.print();
-    a.enqueue(k);
-    a.enqueue(x);
+//    a.enqueue(k);
+//    a.print();
+    std::cout << "full: " << a.full() << std::endl;
     a.print();
     a.dequeue();
     a.print();
     std::cout << "front Result: " << a.front().name << std::endl;
     a.dequeue();
     a.print();
-    a.dequeue();
+    std::cout << "empty: " << a.empty() << std::endl;
     a.print();
-    a.dequeue();
-    a.enqueue(x);
-    a.enqueue(y);
+    std::cout << "empty: " << a.empty() << std::endl;
+    a.enqueue(z);
     a.print();
     a.makenull();
-    a.print();
+    std::cout << "empty: " << a.empty() << std::endl;
+    //a.print();
 
 return 0;
 }

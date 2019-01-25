@@ -14,9 +14,9 @@ namespace atdlistaueue
     class Queue
     {
     public:
-        void enqueue(data_type x);
-        data_type dequeue();
-        data_type front();
+        void enqueue(elem x);
+        elem dequeue();
+        elem front();
         void makenull();
         void print();
         bool full();
@@ -28,23 +28,25 @@ namespace atdlistaueue
 
 namespace dvarqueue
 {
-    enum {AR_SIZE = 4, AR_EMPTY = -1};
+    enum {AR_SIZE = 4}; //Константы для реализации кольцевого массива
+                                       //AR_SIZE размер массива
 
     class Queue
     {
     public:
         Queue();
-        void enqueue(data_type x);
-        data_type dequeue();
-        data_type front();
+        void enqueue(elem x);
+        elem dequeue();
+        elem front();
         void makenull();
         void print();
         bool full();
         bool empty();
     private:
-        int _begin;
-        int _end;
-        data_type _arr[AR_SIZE];
+        int _begin; //Начало массива
+        int _end; //Конец массива
+        elem _arr[AR_SIZE];
+        int step(int p);
     };
 }
 
@@ -53,13 +55,13 @@ namespace circlelist
 
     struct cnode
     {
-        data_type data;
+        elem data;
         cnode * next;
         cnode()
         {
             next = this;
         }
-        cnode(data_type x, cnode * n):data(x),next(n)
+        cnode(elem x, cnode * n):data(x),next(n)
         {}
     };
 
@@ -68,9 +70,9 @@ namespace circlelist
     public:
         Queue();
         ~Queue();
-        void enqueue(data_type x);
-        data_type dequeue();
-        data_type front();
+        void enqueue(elem x);
+        elem dequeue();
+        elem front();
         void makenull();
         void print();
         bool full();
