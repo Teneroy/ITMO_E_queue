@@ -4,8 +4,6 @@
 
 #ifndef ITMO_E_QUEUE_QUEUE_H
 #define ITMO_E_QUEUE_QUEUE_H
-//#define AR_SIZE 4
-//#define AR_EMPTY -1
 #include "../ITMO_E_listmerge/List.h"
 using namespace arrlist;
 

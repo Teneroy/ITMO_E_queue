@@ -72,7 +72,6 @@ bool dvarqueue::Queue::empty()
 
 bool dvarqueue::Queue::full()
 {
-    std::cout << "STEP: " << step(step(_end)) << std::endl;
     return step(step(_end)) == _begin; //Если начало равно обозначению пустого массива, то массив пуст
 }
 
