@@ -4,7 +4,7 @@
 
 #include "Queue.h"
 
-void atdlistaueue::Queue::enqueue(elem x)
+void atdlistaueue::Queue::enqueue(const elem &x)
 {
     _ob.insert(_ob.endL(), x);
 }
@@ -16,17 +16,17 @@ elem atdlistaueue::Queue::dequeue()
     return x;
 }
 
-elem atdlistaueue::Queue::front()
+elem atdlistaueue::Queue::front() const
 {
     return _ob.retrieve(_ob.firstL());
 }
 
-bool atdlistaueue::Queue::full()
+bool atdlistaueue::Queue::full() const
 {
     return false;
 }
 
-bool atdlistaueue::Queue::empty()
+bool atdlistaueue::Queue::empty() const
 {
     return _ob.endL() == 0;
 }
@@ -36,7 +36,7 @@ void atdlistaueue::Queue::makenull()
     _ob.makenull();
 }
 
-void atdlistaueue::Queue::print()
+void atdlistaueue::Queue::print() const
 {
     _ob.printList();
 }
@@ -49,7 +49,7 @@ dvarqueue::Queue::Queue()
     _end = AR_SIZE - 1;//Задаю концу списка позицию, чтобы тот при первом добавлении, писал в ноль
 }
 
-void dvarqueue::Queue::enqueue(elem x)
+void dvarqueue::Queue::enqueue(const elem &x)
 {
     _end = step(_end);
     _arr[_end] = x;
@@ -60,17 +60,17 @@ elem dvarqueue::Queue::dequeue()
     _begin = step(_begin);
 }
 
-elem dvarqueue::Queue::front()
+elem dvarqueue::Queue::front() const
 {
     return _arr[_begin]; //Возвращаем первый элемент
 }
 
-bool dvarqueue::Queue::empty()
+bool dvarqueue::Queue::empty() const
 {
     return step(_end) == _begin; //Если позиция после последней равна началу, то массив заполнен
 }
 
-bool dvarqueue::Queue::full()
+bool dvarqueue::Queue::full() const
 {
     return step(step(_end)) == _begin; //Если начало равно обозначению пустого массива, то массив пуст
 }
@@ -81,7 +81,7 @@ void dvarqueue::Queue::makenull() //Зануляем
     _end = AR_SIZE - 1;
 }
 
-void dvarqueue::Queue::print()
+void dvarqueue::Queue::print() const
 {
     std::cout << std::setw(25) << "<BEGIN: -> " << _begin << ">";
     std::cout << std::setw(25) << "<END: -> " << _end << ">" << std::endl;
@@ -94,7 +94,7 @@ void dvarqueue::Queue::print()
     }
 }
 
-int dvarqueue::Queue::step(int p)
+int dvarqueue::Queue::step(int p) const
 {
     return ((p + 1) % AR_SIZE);
 }
@@ -114,7 +114,7 @@ circlelist::Queue::~Queue()
     }
 }
 
-void circlelist::Queue::enqueue(elem x)
+void circlelist::Queue::enqueue(const elem &x)
 {
     if(tail == nullptr)
     {
@@ -127,7 +127,7 @@ void circlelist::Queue::enqueue(elem x)
         {
             tail -> next = new cnode(x, temp);
             tail = tail -> next;
-            tail -> next = temp;
+            //tail -> next = temp;
         } else
         {
             tail -> next = new cnode(x, tail);
@@ -152,17 +152,17 @@ elem circlelist::Queue::dequeue()
     return x;
 }
 
-elem circlelist::Queue::front()
+elem circlelist::Queue::front() const
 {
     return tail -> next -> data;
 }
 
-bool circlelist::Queue::full()
+bool circlelist::Queue::full() const
 {
     return false;
 }
 
-bool circlelist::Queue::empty()
+bool circlelist::Queue::empty() const
 {
     return tail == nullptr;
 }
@@ -178,11 +178,12 @@ void circlelist::Queue::makenull()
             temp2 = temp2 -> next;
             delete temp1;
         }
+        delete temp2;
         tail = nullptr;
 
 }
 
-void circlelist::Queue::print()
+void circlelist::Queue::print() const
 {
     if(!empty())
     {

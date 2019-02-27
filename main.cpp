@@ -4,7 +4,7 @@
 
 #include "Queue.h"
 #include <fstream>
-using namespace atdlistaueue;
+using namespace circlelist;
 
 void readFile(Queue &q, const char * fname)
 {

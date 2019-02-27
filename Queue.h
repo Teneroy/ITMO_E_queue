@@ -12,13 +12,13 @@ namespace atdlistaueue
     class Queue
     {
     public:
-        void enqueue(elem x);
+        void enqueue(const elem &x);
         elem dequeue();
-        elem front();
+        elem front() const;
         void makenull();
-        void print();
-        bool full();
-        bool empty();
+        void print() const;
+        bool full() const;
+        bool empty() const;
     private:
         List _ob;
     };
@@ -33,18 +33,18 @@ namespace dvarqueue
     {
     public:
         Queue();
-        void enqueue(elem x);
+        void enqueue(const elem &x);
         elem dequeue();
-        elem front();
+        elem front() const;
         void makenull();
-        void print();
-        bool full();
-        bool empty();
+        void print() const;
+        bool full() const;
+        bool empty() const;
     private:
         int _begin; //Начало массива
         int _end; //Конец массива
         elem _arr[AR_SIZE];
-        int step(int p);
+        int step(int p) const;
     };
 }
 
@@ -68,13 +68,13 @@ namespace circlelist
     public:
         Queue();
         ~Queue();
-        void enqueue(elem x);
+        void enqueue(const elem &x);
         elem dequeue();
-        elem front();
+        elem front() const;
         void makenull();
-        void print();
-        bool full();
-        bool empty();
+        void print() const;
+        bool full() const;
+        bool empty() const;
     private:
         cnode * tail;
     };
